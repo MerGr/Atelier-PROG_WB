@@ -6,42 +6,12 @@ if (!isset($_SESSION['login'])) {
     exit;
 }
 
-$csvFile = 'notes.csv';
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
-    $nomToDelete = $_POST['delete'];
-
-    $tempFile = 'temp.csv';
-    $file = fopen($csvFile, 'r');
-    $temp = fopen($tempFile, 'w');
-
-    if ($file && $temp) {
-        while (($line = fgetcsv($file, 1000, ';')) !== false) {
-            if ($line[0] !== $nomToDelete) {
-                fputcsv($temp, $line, ';');
-            }
-        }
-        fclose($file);
-        fclose($temp);
-
-        
-        if (!rename($tempFile, $csvFile)) {
-            die("Error updating the file!");
-        }
-    } else {
-        die("File error!");
-    }
-
-    
-    if (isset($_COOKIE['etudiants'])) {
-        $etudiants = unserialize($_COOKIE['etudiants']);
-        foreach ($etudiants as $key => $etudiant) {
-            if ($etudiant['nom'] === $nomToDelete) {
-                unset($etudiants[$key]);
-                break;
-            }
-        }
-        setcookie('etudiants', serialize($etudiants), time() + (3600 * 24), '/');
+if(isset($_GET['id'])){
+    $index=$_GET['id'];
+    $etudiants=isset($_COOKIE['etudiants'])?unserialize($_COOKIE['etudiants']):[];
+    if(isset($etudiants[$index])){
+        array_splice($etudiants,$index,1);
+        setcookie('etudiants',serialize($etudiants),time()+86400,'/');
     }
 }
 

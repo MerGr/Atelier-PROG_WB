@@ -3,33 +3,19 @@ session_start();
 if (isset($_SESSION['login'])) {
     $filename = 'notes.csv';
 
-    if (isset($_POST['modify'])) {
-        $nomToModify = $_POST['modify'];
+    if (isset($_GET['modify'])) {
+        $index = $_GET['modify'];
     }
 
     if (isset($_POST['modifier'])) {
-        $newNom = $nomToModify;
+        $newNom = $etudiants[$index]->nom;
         $newMath = $_POST['maths'];
         $newInfo = $_POST['info'];
 
-        if (!empty($newNom) && !empty($newMath) && !empty($newInfo)) {
-            // Read file
-            $lines = file($filename, FILE_IGNORE_NEW_LINES);
-            $updatedLines = [];
-
-            foreach ($lines as $line) {
-                list($nom, $math, $info) = explode(';', $line);
-                if ($nom === $nomToModify) {
-                    // Modify this line
-                    $updatedLines[] = "$newNom;$newMath;$newInfo";
-                } else {
-                    $updatedLines[] = $line;
-                }
-            }
-
-            // Write back to file
-            file_put_contents($filename, implode("\n", $updatedLines) . "\n");
-
+        if (!empty($newMath) && !empty($newInfo)) {
+            $etudiants[$index]=["math"=>$newMath,"info"=>$newInfo];
+            setcookie("etudiants",serialize($etudiants),time()
+                +(3600*24),'/');
             echo "Student record updated successfully!";
         } else {
             echo "Please fill in all fields.";
@@ -49,9 +35,12 @@ if (isset($_SESSION['login'])) {
         <img placeholder="LOGO" src="./assets/logo.png" id="logo-image"/>
         <div id="parent-box">
             <form method="POST" action="modify.php">
+                <div style="display: none;">
+                    <input type="text" name="index" value="<?php echo $index?>" required disabled hidden>
+                </div>
                 <div>
                     <label for="stdnt-name">Etudiant</label>
-                    <input type="text" name="stdnt-name" value="<?php echo $nomToModify?>" required disabled>
+                    <input type="text" name="stdnt-name" value="<?php echo $etudiants[$index]->nom?>" required disabled>
                 </div><div>
                     <label for="maths">Maths</label>
                     <input type="number" step="0.01" min="0" max="20.00" name="maths" required>

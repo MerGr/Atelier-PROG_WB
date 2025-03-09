@@ -33,12 +33,23 @@
                 <tr id="toprow"><th>Nom complet</th><th>Moyenne</th><th>Observation</th><th colspan="2">Action</th></tr>
                 <?php
                 if($etudiants!=[]){
-                    foreach ($etudiants as $etudiant) {
-                        $moy=($etudiant['info']+$etudiant['math'])/2;
+                    for($index=0;$index<count($etudiants);$index++){ {
+                        $moy=($etudiant[$index]->info+$etudiant[$index]->math)/2;
                         $observation= $moy>=10 ? "<td id='V'>Votre admission a été retenue</td>" : "<td id='NV'>Votre admission n'a été retenue</td>" ;
-                        echo "<tr><td>{$etudiant['nom']}</td><td>$moy</td>$observation<td><button type='submit' name='delete' value='{$etudiant['nom']}' class='button' onClick='return confirm('Etes vous sure ?')'>S</button></td><td><form action='modify.php' method='POST'><button type='submit' name='modify' value='{$etudiant['nom']}' class='button'>M</button></form></td></tr>";
+                        echo "<tr>
+                                <td>{$etudiant[$index]->nom}</td>
+                                <td>$moy</td>
+                                $observation
+                                <td><button type='submit' name='delete' value='{$index}' class='button' onClick='return confirm('Etes vous sure ?')'>S</button></td>
+                                <td>
+                                    <form action='modify.php' method='POST'>
+                                        <button type='submit' name='modify' value='{$index}' class='button'>M</button>
+                                    </form>
+                                </td>
+                            </tr>";
                             }
                         }
+                    }
                 ?>
                 
             </table>
@@ -57,9 +68,10 @@
         <p>University</p>
     </footer>
 </html>
+
 <?php
-}
-else{
-    header("Location: index.php");
-}
+    }
+    else{
+        header("Location: index.php");
+    }
 ?>
