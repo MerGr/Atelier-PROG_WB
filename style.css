@@ -1,0 +1,131 @@
+@media screen and (max-width: 768px) {
+    :root {
+        --max-width: max-content;
+    }
+}
+@media screen and (min-width: 768px) {
+    :root {
+        --max-width: 50em;
+    }
+    
+}
+
+html * {
+    -webkit-transition:0.2s;
+    -moz-transition:0.2s;
+    -o-transition:0.2s;
+    transition:0.2s;
+    transition-property: all;
+}
+
+html, body, #parent-box, div, form, .buttons{
+    display: flex;
+    align-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    column-gap: 1em;
+
+}
+
+html, body, #parent-box, form{
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #edf1ebfe;
+}
+
+div{
+    justify-content: space-between;
+    margin: 1em 0 1em 0;
+    width: 100%;
+}
+
+img{
+    width: 12em;
+    height: 12em;
+    margin: 0 auto;
+}
+
+#parent-box{
+    z-index: 20;
+    border-color: #b0aa7af2;
+    color: white;
+    background-color: #10212b;
+    border-style: solid;
+    border-width: 3px;
+    box-shadow: 0 0 5px 0 gray;
+    padding: 1em;
+    max-width: var(--max-width);
+}
+
+#res{
+    padding: 1em 3em 1em 3em;
+    text-align: center;
+    background-color: #b0aa7af2;
+}
+
+#remarque{
+    color: red;
+}
+
+input[type="text"], input[type="password"], input[type="number"]{
+    min-width: fit-content;
+    padding: .5em;
+}
+
+.button{
+    background-color: #b0aa7af2;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    padding: 1em;
+    text-align: center;
+    margin: .25em;
+    cursor: pointer;
+}
+
+.button:hover{
+    background-color: #746f50f2;
+}
+
+.buttons{
+    max-width: 70%;
+}
+
+footer{
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+}
+
+table{
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+th, tr, #toprow, td{
+    padding: .5em;
+    text-align: left;
+    border: 1px solid black;
+}
+
+#toprow{
+    background-color: #b0aa7af2;
+    color: white;
+}
+
+#V {
+    color: green;
+}
+
+#NV {
+    color: red;
+}
