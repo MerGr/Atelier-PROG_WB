@@ -16,7 +16,7 @@ if (isset($_SESSION['login'])) {
             $etudiants[$index]=["math"=>$newMath,"info"=>$newInfo];
             setcookie("etudiants",serialize($etudiants),time()
                 +(3600*24),'/');
-            echo "Student record updated successfully!";
+            header('location:result.php');
         } else {
             echo "Please fill in all fields.";
         }

@@ -1,39 +1,23 @@
 <?php
+require_once('Classes.php');
 session_start();
-if(isset($_SESSION['login'])){
-    $etudiants=[];
-    if(isset($_COOKIE['etudiants'])){
-        $etudiants=unserialize($_COOKIE['etudiants']);
-        $file = fopen('notes.csv','a');
-        if($file){
-            while(($line = fgetcsv($file, 100, ';')) !== false){
-                $nom_etud_list[] = $line[0];
-            }
-            foreach($etudiants as $etudiant){
-                $new = true;
-                foreach($nom_etud_list as $check_existing){
-                    if($etudiant['nom'] == $check_existing){
-                        $new = false;
-                        echo "<h3 style='color: white; padding: 1em; background-color: red; margin-top: 2em; border-radius: 5px;'>L'etudiant ".$etudiant['nom']." existe deja</h3>";
-                        break;
-                    }
-                }
-                if($new) fputcsv($file, $etudiant, ';');
-            }
-            fclose($file);
-        }
-        setcookie('etudiants',serialize($etudiants), time() +(3600*24),'/');
-    }
-    if(isset($_POST['ajouter'])){ 
-        $nom=$_POST['stdnt-name'];
-        $math=$_POST['maths'];
-        $info=$_POST['info'];
-        if(!empty($nom) && !empty($math) && !empty($info)){
-            $etudiants[]=["nom"=>$nom,"math"=>$math,"info"=>$info];
-            setcookie("etudiants",serialize($etudiants),time()
-                +(3600*24),'/');
-        }
-    }
+if(!isset($_SESSION['id'])){
+    header("location:index.php");
+}
+
+function  nouvel($nom,$math,$info){
+    return new Etudiants($nom,$math,$info);
+}
+$etudiants= isset($_COOKIE['etudiants']) ? unserialize($_COOKIE['etudiants']) : [];
+
+if($_SERVER['REQUEST_METHOD']=='POST'){
+    $nom=$_POST['nom'];
+    $notM=$_POST['maths'];
+    $notInfo=$_POST['info'];
+    $etudiants[]=nouvel($nom,$notM,$notInfo);
+    setcookie('etudiants',serialize($etudiants),time()+86400,"/");
+    
+}
 
 ?>
 <html>
@@ -77,9 +61,3 @@ if(isset($_SESSION['login'])){
         <p>University</p>
     </footer>
 </html>
-<?php
-}
-else{
-    header("Location: index.php");
-}
-?>
