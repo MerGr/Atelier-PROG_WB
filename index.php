@@ -1,4 +1,5 @@
-<?php 
+<?php
+require_once('Classes.php'); 
 session_start();
 if($_SERVER['REQUEST_METHOD']=='POST')
 {
@@ -9,7 +10,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
         while(($key = fgetcsv($file, 100, ";")) !== false){
             if($key[0]==$uname && $key[1]==$pwd)
             {
-                $_SESSION['login']=$uname;
+                $_SESSION['id']=$uname;
                 header('Location: student.php');
             }
         }
@@ -18,7 +19,24 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 
         echo "<h3 style='color: white; padding: 1em; background-color: red; margin-top: 2em; border-radius: 5px;'>Le mot de passe ou l'identifiant est incorrect</h3>";
     }
+    else{
+        echo "<h3 style='color: white; padding: 1em; background-color: red; margin-top: 2em; border-radius: 5px;'>Oops! Un erreur est survenue. Merci du ressayer plus tard</h3>";
+    }
 }
+
+$etudiants=[];
+function import_note(){
+    $file=fopen("notes.csv","r");
+    $etudiants=[];
+    if($file){
+        while(($line=fgetcsv($file,100,";"))!==false){
+            $etudiants[]=new Etudiants($line[0],$line[1],$line[2]);
+        }
+    }
+    return $etudiants;
+}
+    $etudiants=import_note();
+    setcookie('etudiants',serialize($etudiants),time()+86400,"/");
 
 ?>
 <html>
