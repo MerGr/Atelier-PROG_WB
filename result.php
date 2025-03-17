@@ -33,7 +33,7 @@ $etudiants= isset($_COOKIE['etudiants']) ? unserialize($_COOKIE['etudiants']) : 
                 
             </table>
             <div class="buttons">
-                <form action="student.php" method="POST">
+                <form action="student.php">
                     <button type="submit" name="return" class="button">Retourner</button>
                 </form>
                 <form action="disconnect.php" method="POST">
