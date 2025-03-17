@@ -25,9 +25,9 @@ $etudiants= isset($_COOKIE['etudiants']) ? unserialize($_COOKIE['etudiants']) : 
                         <tr>
                             <td><?= htmlspecialchars($etudiants[$c]->nom) ?></td>
                             <td><?=$etudiants[$c]->calculemoyenne()?></td>
-                            <td><?= htmlspecialchars($etudiants[$c]->remarque()) ?></td>
-                            <td><a href="modifier.php?id=<?=$c?>"><button style="background-color: #ffc107; color: white;">Modifier</button></a></td>
-                            <td><a href="supprimer.php?id=<?=$c?>"><button style="background-color: #dc3545; color: white;">Supprimer</button></a></td>
+                            <?= htmlspecialchars($etudiants[$c]->remarque()) ?>
+                            <td><a href="modify.php?id=<?=$c?>"><button style="background-color: #ffc107; color: white;">Modifier</button></a></td>
+                            <td><a href="delete.php?id=<?=$c?>"><button style="background-color: #dc3545; color: white;">Supprimer</button></a></td>
                         </tr>
                     <?php };?>
                 

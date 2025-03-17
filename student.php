@@ -11,7 +11,7 @@ function  nouvel($nom,$math,$info){
 $etudiants= isset($_COOKIE['etudiants']) ? unserialize($_COOKIE['etudiants']) : [];
 
 if($_SERVER['REQUEST_METHOD']=='POST'){
-    $nom=$_POST['nom'];
+    $nom=$_POST['stdnt-name'];
     $notM=$_POST['maths'];
     $notInfo=$_POST['info'];
     $etudiants[]=nouvel($nom,$notM,$notInfo);
