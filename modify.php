@@ -1,26 +1,22 @@
 <?php
+require_once('Classes.php');
 session_start();
-if (isset($_SESSION['login'])) {
-    $filename = 'notes.csv';
+if(!isset($_SESSION['id'])){
+    header('Location:index.php');
+}
 
-    if (isset($_GET['modify'])) {
-        $index = $_GET['modify'];
-    }
+$index=$_GET['id'];
+$etudiants=isset($_COOKIE['etudiants'])?unserialize($_COOKIE['etudiants']):[];
 
-    if (isset($_POST['modifier'])) {
-        $newNom = $etudiants[$index]->nom;
-        $newMath = $_POST['maths'];
-        $newInfo = $_POST['info'];
 
-        if (!empty($newMath) && !empty($newInfo)) {
-            $etudiants[$index]=["math"=>$newMath,"info"=>$newInfo];
-            setcookie("etudiants",serialize($etudiants),time()
-                +(3600*24),'/');
-            header('location:result.php');
-        } else {
-            echo "Please fill in all fields.";
-        }
-    }
+if($_SERVER['REQUEST_METHOD']=='POST'){
+    $etudiants[$index]->noteM=$_POST['maths'];
+    $etudiants[$index]->noteInfo=$_POST['info'];
+    setcookie('etudiants',serialize($etudiants),time()+86400,'/');
+    header('Location:result.php');
+    exit();
+
+}
 
 ?>
 
@@ -34,13 +30,13 @@ if (isset($_SESSION['login'])) {
     <body>
         <img placeholder="LOGO" src="./assets/logo.png" id="logo-image"/>
         <div id="parent-box">
-            <form method="POST" action="modify.php">
+            <form method="POST">
                 <div style="display: none;">
                     <input type="text" name="index" value="<?php echo $index?>" required disabled hidden>
                 </div>
                 <div>
-                    <label for="stdnt-name">Etudiant</label>
-                    <input type="text" name="stdnt-name" value="<?php echo $etudiants[$index]->nom?>" required disabled>
+                    <label for="nom">Etudiant</label>
+                    <input type="text" name="nom" value="<?php echo $etudiants[$index]->nom?>" required disabled>
                 </div><div>
                     <label for="maths">Maths</label>
                     <input type="number" step="0.01" min="0" max="20.00" name="maths" required>
@@ -67,9 +63,3 @@ if (isset($_SESSION['login'])) {
         <p>University</p>
     </footer>
 </html>
-<?php
-}
-else{
-    header("Location: index.php");
-}
-?>

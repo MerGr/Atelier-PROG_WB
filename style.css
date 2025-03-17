@@ -79,7 +79,7 @@ input[type="text"], input[type="password"], input[type="number"]{
     padding: .5em;
 }
 
-.button{
+.button, #mod, #del{
     background-color: #b0aa7af2;
     border: none;
     color: white;
@@ -90,7 +90,17 @@ input[type="text"], input[type="password"], input[type="number"]{
     cursor: pointer;
 }
 
-.button:hover{
+.buttoncell{
+    padding: 0;
+}
+
+#mod, #del{
+    margin: 0;
+    width: 100%;
+    height: 100;
+}
+
+.button:hover, #mod:hover, #del:hover{
     background-color: #746f50f2;
 }
 

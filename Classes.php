@@ -22,7 +22,7 @@ class Etudiants{
         return ($this->noteM+$this->noteInfo)/2;
     }
     public function remarque(){
-        return $this->calculemoyenne()>=10? "<td id='V'>Votre admission a été retenue</td>" : "<td id='NV'>Votre admission n'a été retenue</td>" ;
+        return $this->calculemoyenne()>=10? "<p id='V'>Votre admission a été retenue</p>" : "<p id='NV'>Votre admission n'a été retenue</p>" ;
     }
 
     public function __serialize(){
