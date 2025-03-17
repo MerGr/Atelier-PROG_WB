@@ -11,7 +11,7 @@ function  nouvel($nom,$math,$info){
 $etudiants= isset($_COOKIE['etudiants']) ? unserialize($_COOKIE['etudiants']) : [];
 
 if($_SERVER['REQUEST_METHOD']=='POST'){
-    $nom=$_POST['stdnt-name'];
+    $nom=$_POST['nom'];
     $notM=$_POST['maths'];
     $notInfo=$_POST['info'];
     $etudiants[]=nouvel($nom,$notM,$notInfo);
@@ -32,8 +32,8 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         <div id="parent-box">
             <form method="POST" action="student.php">
                 <div>
-                    <label for="stdnt-name">Etudiant</label>
-                    <input type="text" name="stdnt-name" required>
+                    <label for="nom">Etudiant</label>
+                    <input type="text" name="nom" required>
                 </div><div>
                     <label for="maths">Maths</label>
                     <input type="number" step="0.01" min="0" max="20.00" name="maths" required>
