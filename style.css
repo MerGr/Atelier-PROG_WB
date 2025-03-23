@@ -92,6 +92,7 @@ input[type="text"], input[type="password"], input[type="number"]{
 
 .buttoncell{
     padding: 0;
+    margin: 0;
 }
 
 #mod, #del, #prt{
