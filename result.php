@@ -21,6 +21,11 @@ function import_note(){
     $etudiants=import_note();
     setcookie('etudiants',serialize($etudiants),time()+86400,"/");
 
+if (isset($_POST['confirm_delete'])) {
+    $delete_id = $_POST['delete_id'];
+    header("Location: delete.php?id=$delete_id");
+    exit();
+}
 
 ?>
 
@@ -36,16 +41,21 @@ function import_note(){
         <div id="parent-box">
             <table>
                 <tr id="toprow"><th>Nom complet</th><th>Moyenne</th><th>Observation</th><th colspan="3">Action</th></tr>
-                <?php for($c=0;$c<count($etudiants);$c++){?>
-                        <tr>
-                            <td><?= htmlspecialchars($etudiants[$c]->nom) ?></td>
-                            <td><?=$etudiants[$c]->calculemoyenne()?></td>
-                            <td><?=$etudiants[$c]->remarque()?></td>
-                            <td class="buttoncell"><a href="modify.php?id=<?=$etudiants[$c]->ID?>"><button id="mod">Modifier</button></a></td>
-                            <td class="buttoncell"><a href="delete.php?id=<?=$etudiants[$c]->ID?>"><button id="del">Supprimer</button></a></td>
-                            <td class="buttoncell"><a href="print.php?id=<?=$etudiants[$c]->ID?>"><button id="prt">Imprimer</button></a></td>
-                        </tr>
-                    <?php };?>
+                <?php foreach ($etudiants as $etudiant): ?>
+                <tr>
+                    <td><?= htmlspecialchars($etudiant->nom) ?></td>
+                    <td><?= $etudiant->calculemoyenne() ?></td>
+                    <td><?= $etudiant->remarque() ?></td>
+                    <td class="buttoncell"><a href="modify.php?id=<?= $etudiant->ID ?>"><button id="mod">Modifier</button></a></td>
+                    <td class="buttoncell">
+                        <form method="POST">
+                            <input type="hidden" name="delete_id" value="<?= $etudiant->ID ?>">
+                            <button type="submit" name="delete">Supprimer</button>
+                        </form>
+                    </td>
+                    <td class="buttoncell"><a href="print.php?id=<?= $etudiant->ID ?>"><button id="prt">Imprimer</button></a></td>
+                </tr>
+            <?php endforeach; ?>
                 
             </table>
             <div class="buttons">
@@ -57,6 +67,19 @@ function import_note(){
                 </a>
             </div>  
         </div>
+
+        <?php if (isset($_POST['delete'])): ?>
+        <div class="popup">
+            <div class="popup-content">
+                <p>Êtes-vous sûr de vouloir supprimer cet étudiant ?</p>
+                <form method="POST">
+                    <input type="hidden" name="delete_id" value="<?= $_POST['delete_id'] ?>">
+                    <button type="submit" name="confirm_delete">Oui</button>
+                    <a href="result.php"><button type="button">Non</button></a>
+                </form>
+            </div>
+        </div>
+    <?php endif; ?>
     </body>
     
     <footer>
