@@ -64,12 +64,12 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                 </div>
             </form>
             <div class="buttons">
-                <form action="result.php" method="POST">
-                    <button type="submit" name="afficher" class="button">Afficher</button>
-                </form>
-                <form action="disconnect.php" method="POST">
-                    <button type="submit" name="deconnexion" class="button">Deconnexion</button>
-                </form>
+                <a href="result.php">
+                    <button name="afficher" class="button">Afficher</button>
+                </a>
+                <a href="disconnect.php">
+                    <button name="deconnexion" class="button">Deconnexion</button>
+                </a>
             </div>  
         </div>
     </body>

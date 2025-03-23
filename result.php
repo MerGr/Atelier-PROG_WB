@@ -49,12 +49,12 @@ function import_note(){
                 
             </table>
             <div class="buttons">
-                <form action="student.php">
-                    <button type="submit" name="return" class="button">Retourner</button>
-                </form>
-                <form action="disconnect.php" method="POST">
-                    <button type="submit" name="deconnexion" class="button">Deconnexion</button>
-                </form>
+                <a href="student.php">
+                    <button name="return" class="button">Ajouter</button>
+                </a>
+                <a href="disconnect.php">
+                    <button name="deconnexion" class="button">Deconnexion</button>
+                </a>
             </div>  
         </div>
     </body>
