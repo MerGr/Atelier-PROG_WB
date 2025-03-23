@@ -48,9 +48,22 @@ if (isset($_POST['confirm_delete'])) {
                     <td><?= $etudiant->remarque() ?></td>
                     <td class="buttoncell"><a href="modify.php?id=<?= $etudiant->ID ?>"><button id="mod">Modifier</button></a></td>
                     <td class="buttoncell">
-                        <form method="POST" class="buttoncell">
+                        <form method="POST" class="buttoncell" action="<?php if (isset($_POST['delete'])){
+                            echo '
+                                <div class="popup">
+                                    <div class="popup-content">
+                                        <p>Êtes-vous sûr de vouloir supprimer cet étudiant ?</p>
+                                        <form method="POST">
+                                            <input type="hidden" name="delete_id" value="<?= $_POST["delete_id"] ?>">
+                                            <button type="submit" name="confirm_delete" class="button">Oui</button>
+                                            <a href="result.php"><button type="button" class="button">Non</button></a>
+                                        </form>
+                                    </div>
+                                </div>
+                                ';
+                            } ?>"> 
                             <input type="hidden" name="delete_id" value="<?= $etudiant->ID ?>">
-                            <button type="submit" name="delete" value="delete" id="del">Supprimer</button>
+                            <button type="submit" name="delete" id="del">Supprimer</button>
                         </form>
                     </td>
                     <td class="buttoncell"><a href="print.php?id=<?= $etudiant->ID ?>"><button id="prt">Imprimer</button></a></td>
@@ -68,18 +81,7 @@ if (isset($_POST['confirm_delete'])) {
             </div>  
         </div>
 
-        <?php if (isset($_POST['delete'])): ?>
-        <div class="popup">
-            <div class="popup-content">
-                <p>Êtes-vous sûr de vouloir supprimer cet étudiant ?</p>
-                <form method="POST">
-                    <input type="hidden" name="delete_id" value="<?= $_POST['delete_id'] ?>">
-                    <button type="submit" name="confirm_delete" class="button">Oui</button>
-                    <a href="result.php"><button type="button" class="button">Non</button></a>
-                </form>
-            </div>
-        </div>
-    <?php endif; ?>
+        
     </body>
     
     <footer>
