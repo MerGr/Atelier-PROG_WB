@@ -48,7 +48,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                     <td><?= $etudiant->remarque() ?></td>
                     <td class="buttoncell"><a href="modify.php?id=<?= $etudiant->ID ?>"><button id="mod">Modifier</button></a></td>
                     <td class="buttoncell">
-                        <form method="POST" action="result.php&delete_id=<?= $etudiant->ID ?>"class="buttoncell">
+                        <form method="POST" class="buttoncell">
                             <input type="hidden" name="delete_id" value="<?= $etudiant->ID ?>">
                             <button type="submit" name="delete" id="del">Supprimer</button>
                         </form>
@@ -72,7 +72,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
             <div class="popup">
                 <div class="popup-content">
                     <p>Êtes-vous sûr de vouloir supprimer cet étudiant ?</p>
-                    <a href="delete.php?id=<?= $_POST['delete_id'] ?>"><button type="button" class="button">Oui</button></a>
+                    <a href="delete.php?id=<?=$etudiant->ID ?>"><button type="button" class="button">Oui</button></a>
                     <a href="result.php"><button type="button" class="button">Non</button></a>
                 </div>
             </div>
