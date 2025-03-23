@@ -23,8 +23,6 @@ function import_note(){
 
     if (isset($_POST['delete'])) {
         $_SESSION['delete_id'] = $_POST['delete_id'];
-        header("Location: result.php");
-        exit();
     }
 
     if (isset($_POST['confirm_delete'])) {
