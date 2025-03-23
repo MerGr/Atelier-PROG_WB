@@ -24,12 +24,12 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $nom=$_POST['nom'];
     $notM=$_POST['maths'];
     $notInfo=$_POST['info'];
-    count($etudiants)==0 ? $etudiants[]=new Etudiants(1,$nom,$notM,$notInfo) :
-    $etudiants[]=new Etudiants(count($etudiants)+1,$nom,$notM,$notInfo);
+    $ID=count($etudiants)+1;
+    $etudiants[]=new Etudiants($ID,$nom,$notM,$notInfo);
     $conn=getConnection();
     if($conn){
         $sql=$conn->prepare("INSERT INTO Notes VALUES(?,?,?,?)");
-        $sql->execute([$etudiants['ID'],$nom,$notM,$notInfo]);
+        $sql->execute([$ID,$nom,$notM,$notInfo]);
         closeConnection($conn);
         setcookie('etudiants',serialize($etudiants),time()+86400,"/");
     } else {
