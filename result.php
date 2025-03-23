@@ -21,6 +21,12 @@ function import_note(){
     $etudiants=import_note();
     setcookie('etudiants',serialize($etudiants),time()+86400,"/");
 
+
+if($_SERVER['REQUEST_METHOD']=='POST'){
+    $confirm = true;
+} else {
+    $confirm = false;
+}
 ?>
 
 <html>
@@ -62,7 +68,7 @@ function import_note(){
             </div>  
         </div>
 
-        <?php if ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
+        <?php if ($confirm): ?>
             <div class="popup">
                 <div class="popup-content">
                     <p>Êtes-vous sûr de vouloir supprimer cet étudiant ?</p>
