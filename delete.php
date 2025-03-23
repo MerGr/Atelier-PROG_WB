@@ -33,7 +33,8 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     </head>
 
     <body>
-        <div class="parent-box">
+        <img placeholder="LOGO" src="./assets/logo.png" id="logo-image"/>
+        <div id="parent-box">
             <p>Êtes-vous sûr de vouloir supprimer cet étudiant ?</p>
             <form method="POST">
                 <div class="buttons">
