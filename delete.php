@@ -7,8 +7,9 @@ if (!isset($_SESSION['id'])) {
     exit;
 }
 
-if(isset($_GET['id'])){
-    $index=$_GET['id'];
+$index=$_GET['id'];
+
+if($_SERVER['REQUEST_METHOD']=='POST'){
     $etudiants=isset($_COOKIE['etudiants'])?unserialize($_COOKIE['etudiants']):[];
     $conn=getConnection();
     if($conn){
@@ -23,3 +24,27 @@ if(isset($_GET['id'])){
 
 header('location: result.php');
 ?>
+
+<html>
+    <head>
+        <title>Atelier</title>
+        <meta charset="utf-8" lang="fr-FR">
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+
+    <body>
+        <div class="popup">
+            <div class="popup-content">
+                <p>Êtes-vous sûr de vouloir supprimer cet étudiant ?</p>
+                <form method="POST">
+                    <button type="submit" name="delete" class="button">Oui</button>
+                    <a href="result.php"><button type="button" class="button">Non</button></a>
+                </form>
+            </div>
+        </div>
+    </body>
+ 
+    <footer>
+        <p>University</p>
+    </footer>
+</html>

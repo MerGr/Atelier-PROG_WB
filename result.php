@@ -21,12 +21,6 @@ function import_note(){
     $etudiants=import_note();
     setcookie('etudiants',serialize($etudiants),time()+86400,"/");
 
-
-if($_SERVER['REQUEST_METHOD']=='POST'){
-    $confirm = true;
-} else {
-    $confirm = false;
-}
 ?>
 
 <html>
@@ -47,12 +41,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                     <td><?= $etudiant->calculemoyenne() ?></td>
                     <td><?= $etudiant->remarque() ?></td>
                     <td class="buttoncell"><a href="modify.php?id=<?= $etudiant->ID ?>"><button id="mod">Modifier</button></a></td>
-                    <td class="buttoncell">
-                        <form method="POST" class="buttoncell">
-                            <input type="hidden" name="delete_id" value="<?= $etudiant->ID ?>">
-                            <button type="submit" name="delete" id="del">Supprimer</button>
-                        </form>
-                    </td>
+                    <td class="buttoncell"><a href="delete.php?id=<?= $etudiant->ID ?>"><button type="submit" name="delete" id="del">Supprimer</button></a></td>
                     <td class="buttoncell"><a href="print.php?id=<?= $etudiant->ID ?>"><button id="prt">Imprimer</button></a></td>
                 </tr>
             <?php endforeach; ?>
