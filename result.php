@@ -56,16 +56,6 @@ function import_note(){
                 </a>
             </div>  
         </div>
-
-        <?php if ($confirm): ?>
-            <div class="popup">
-                <div class="popup-content">
-                    <p>Êtes-vous sûr de vouloir supprimer cet étudiant ?</p>
-                    <a href="delete.php?id=<?=$etudiant->ID ?>"><button type="button" class="button">Oui</button></a>
-                    <a href="result.php"><button type="button" class="button">Non</button></a>
-                </div>
-            </div>
-        <?php endif; ?>
     </body>
  
     <footer>

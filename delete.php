@@ -33,14 +33,14 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     </head>
 
     <body>
-        <div class="popup">
-            <div class="popup-content">
-                <p>Êtes-vous sûr de vouloir supprimer cet étudiant ?</p>
-                <form method="POST">
+        <div class="parent-box">
+            <p>Êtes-vous sûr de vouloir supprimer cet étudiant ?</p>
+            <form method="POST">
+                <div class="buttons">
                     <button type="submit" name="delete" class="button">Oui</button>
                     <a href="result.php"><button type="button" class="button">Non</button></a>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </body>
  
