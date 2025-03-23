@@ -74,8 +74,8 @@ if (isset($_POST['confirm_delete'])) {
                 <p>Êtes-vous sûr de vouloir supprimer cet étudiant ?</p>
                 <form method="POST">
                     <input type="hidden" name="delete_id" value="<?= $_POST['delete_id'] ?>">
-                    <button type="submit" name="confirm_delete">Oui</button>
-                    <a href="result.php"><button type="button">Non</button></a>
+                    <button type="submit" name="confirm_delete" class="button">Oui</button>
+                    <a href="result.php"><button type="button" class="button">Non</button></a>
                 </form>
             </div>
         </div>

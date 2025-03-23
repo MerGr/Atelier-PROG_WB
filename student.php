@@ -24,6 +24,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $nom=$_POST['nom'];
     $notM=$_POST['maths'];
     $notInfo=$_POST['info'];
+    count($etudiants)==0 ? $etudiants[]=new Etudiants(1,$nom,$notM,$notInfo) :
     $etudiants[]=new Etudiants(count($etudiants)+1,$nom,$notM,$notInfo);
     $conn=getConnection();
     if($conn){
