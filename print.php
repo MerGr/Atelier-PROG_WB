@@ -11,12 +11,12 @@ class PDF extends FPDF {
             $sql="SELECT * FROM etudiants";
             $result=$conn->query($sql);
             $data=[];
-            if($result->num_rows>0){
-                while($row=$result->fetch_assoc()){
+            if($result->rowCount()>0){
+                while($row=$result->fetch(PDO::FETCH_ASSOC)){
                     $data[]=new Etudiants($row['Nom'],$row['Maths'],$row['Informatique']);
                 }
             }
-            $conn->close();
+            closeConnection($conn);
             return $data;
         }
     }

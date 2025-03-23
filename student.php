@@ -5,25 +5,35 @@ session_start();
 if(!isset($_SESSION['id'])){
     header("location:index.php");
 }
-
-function  nouvel($nom,$math,$info){
-    return new Etudiants($nom,$math,$info);
+function import_note(){
+    $conn=getConnection();
+    $sql="SELECT * FROM Notes";
+    $result=$conn->query($sql);
+    $etudiants=[];
+    if($result->rowCount()>0){
+        while($row=$result->fetch()){
+            $etudiants[]=new Etudiants($row['Nom'],$row['Maths'],$row['Informatique']);
+        }
+    }
+    closeConnection($conn);
+    return $etudiants;
 }
+    $etudiants=import_note();
 
 if($_SERVER['REQUEST_METHOD']=='POST'){
     $nom=$_POST['nom'];
     $notM=$_POST['maths'];
     $notInfo=$_POST['info'];
-    $etudiants[]=nouvel($nom,$notM,$notInfo);
+    $etudiants[]=new Etudiants($nom,$notM,$notInfo);
     $conn=getConnection();
     if($conn){
-        $sql="INSERT INTO Notes VALUES('$nom',$notM,$notInfo)";
-        $conn->exec($sql);
+        $sql=$conn->prepare("INSERT INTO Notes VALUES(?,?,?,?)");
+        $sql->execute([count($etudiants),$nom,$notM,$notInfo]);
         closeConnection($conn);
+        setcookie('etudiants',serialize($etudiants),time()+86400,"/");
     } else {
         echo "<h3 style='color: white; padding: 1em; background-color: red; margin-top: 2em; border-radius: 5px;'>Oops! Un erreur est survenue. Merci du ressayer plus tard</h3>";
-    }
-    
+    }   
 }
 
 ?>
@@ -68,3 +78,4 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         <p>University</p>
     </footer>
 </html>
+

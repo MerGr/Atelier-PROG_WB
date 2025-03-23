@@ -11,18 +11,19 @@ $etudiants=isset($_COOKIE['etudiants'])?unserialize($_COOKIE['etudiants']):[];
 
 
 if($_SERVER['REQUEST_METHOD']=='POST'){
+    $id=intval($index)+1;
+    $maths=$_POST['maths'];
+    $info=$_POST['info'];
     $conn=getConnection();
-    $sql="UPDATE Notes SET Maths=:maths, Informatique=:info WHERE ID=$index AND Nom=:nom";
+    $sql="UPDATE Notes SET Maths=?, Informatique=? WHERE ID=?";
     if($conn){
         $stmt=$conn->prepare($sql);
-        $stmt->bindParam(':maths',$_POST['maths']);
-        $stmt->bindParam(':info',$_POST['info']);
-        $stmt->execute();
+        $stmt->execute([$maths,$info, $id]);
         closeConnection($conn);
+        header('Location:result.php');
     } else {
         echo "<h3 style='color: white; padding: 1em; background-color: red; margin-top: 2em; border-radius: 5px;'>Oops! Un erreur est survenue. Merci du ressayer plus tard</h3>";
     }
-    header('Location:result.php');
     exit();
 
 }
@@ -31,7 +32,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 
 <html>
     <head>
-        <title>Atelier 0</title>
+        <title>Atelier</title>
         <meta charset="utf-8" lang="fr-FR">
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
@@ -39,9 +40,9 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     <body>
         <img placeholder="LOGO" src="./assets/logo.png" id="logo-image"/>
         <div id="parent-box">
-            <form method="POST">
+            <form method="POST" action="modify.php?id=<?=$index?>"">
                 <div style="display: none;">
-                    <input type="text" name="index" value="<?php echo $index?>" required disabled hidden>
+                    <input type="text" name="index" value="<?php echo $index?>" required hidden>
                 </div>
                 <div>
                     <label for="nom">Etudiant</label>
@@ -72,3 +73,4 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         <p>University</p>
     </footer>
 </html>
+

@@ -1,15 +1,26 @@
 <?php
 require_once('Classes.php');
-require_once('config.php'); 
+require_once('config.php');
+function debug_to_console($data) {
+    $output = $data;
+    if (is_array($output))
+        $output = implode(',', $output);
+
+    echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
+}
+
 session_start();
 if($_SERVER['REQUEST_METHOD']=='POST')
 {
     $user = $_POST['uname'];
-    $pwd = $_POST['pwd'];
+    $pwd = md5($_POST['pwd']);
+    debug_to_console($pwd);
     $conn=getConnection();
     if($conn){
-        $sql= 'SELECT Password FROM Credentials WHERE Login=$user';
-        if(md5($pwd)==$sql){
+        $sql=$conn->prepare('SELECT Password FROM Credentials WHERE Login=:user');
+        $sql->execute([':user' => $user]);
+        $dbpwd = $sql->fetchColumn();
+        if(trim($pwd)===trim($dbpwd)){
             $_SESSION['id']=$user;
             header('Location: student.php');
         } else {
