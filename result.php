@@ -21,17 +21,6 @@ function import_note(){
     $etudiants=import_note();
     setcookie('etudiants',serialize($etudiants),time()+86400,"/");
 
-    if (isset($_POST['delete'])) {
-        $_SESSION['delete_id'] = $_POST['delete_id'];
-    }
-
-    if (isset($_POST['confirm_delete'])) {
-    $delete_id = $_SESSION['delete_id'];
-    unset($_SESSION['delete_id']);
-    header("Location: delete.php?id=$delete_id");
-    exit();
-}
-
 ?>
 
 <html>
@@ -73,19 +62,17 @@ function import_note(){
             </div>  
         </div>
 
-        <?php if (isset($_SESSION['delete_id'])): ?>
-        <div class="popup">
-            <div class="popup-content">
-                <p>Êtes-vous sûr de vouloir supprimer cet étudiant ?</p>
-                <form method="POST">
-                    <input type="hidden" name="delete_id" value="<?= $_POST['delete_id'] ?>">
-                    <button type="submit" name="confirm_delete" class="button">Oui</button>
+        <?php if ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
+            <div class="popup">
+                <div class="popup-content">
+                    <p>Êtes-vous sûr de vouloir supprimer cet étudiant ?</p>
+                    <a href="delete.php?id=<?= $etudiant->ID ?>"><button type="button" class="button">Oui</button></a>
                     <a href="result.php"><button type="button" class="button">Non</button></a>
-                </form>
+                </div>
             </div>
-        </div>
-    <?php endif; ?>
-    </body> 
+        <?php endif; ?>
+    </body>
+ 
     <footer>
         <p>University</p>
     </footer>
