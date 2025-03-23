@@ -11,7 +11,7 @@ $etudiants=isset($_COOKIE['etudiants'])?unserialize($_COOKIE['etudiants']):[];
 
 
 if($_SERVER['REQUEST_METHOD']=='POST'){
-    $id=intval($index)+1;
+    $id=intval($index);
     $maths=$_POST['maths'];
     $info=$_POST['info'];
     $conn=getConnection();

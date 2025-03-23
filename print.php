@@ -5,7 +5,7 @@ require_once('config.php');
 require_once('fpdf.php');
 session_start();
 
-$index=intval($_GET['id'])+1;
+$index=intval($_GET['id']);
 class PDF extends FPDF {
     function LoadData($index){
         $conn=getConnection();

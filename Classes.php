@@ -1,10 +1,12 @@
 <?php
 class Etudiants{
+    public int $ID;
     public string $nom;
     private float $noteM;
     private float $noteInfo;
 
-    public function __construct($nom,$noteM,$noteInfo){
+    public function __construct($ID,$nom,$noteM,$noteInfo){
+        $this->ID=$ID;
         $this->nom=$nom;
         $this->noteM=$noteM;
         $this->noteInfo=$noteInfo;
@@ -27,6 +29,7 @@ class Etudiants{
 
     public function __serialize(){
         return[
+            "ID"=>$this->ID,
             "nom"=>$this->nom,
             "noteM"=>$this->noteM,
             "noteInfo"=>$this->noteInfo
@@ -34,6 +37,7 @@ class Etudiants{
     }
 
     public function __unserialize(array $tab){
+        $this->ID=$tab['ID'];
         $this->nom=$tab['nom'];
         $this->noteM=$tab['noteM'];
         $this->noteInfo=$tab['noteInfo'];
@@ -41,6 +45,7 @@ class Etudiants{
 
     public function toArray(){
         return [
+            "ID"=>$this->ID,
             "nom"=>$this->nom,
             "noteM"=>$this->noteM,
             "noteInfo"=>$this->noteInfo

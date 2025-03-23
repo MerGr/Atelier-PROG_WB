@@ -12,7 +12,7 @@ function import_note(){
     $etudiants=[];
     if($result->rowCount()>0){
         while($row=$result->fetch()){
-            $etudiants[]=new Etudiants($row['Nom'],$row['Maths'],$row['Informatique']);
+            $etudiants[]=new Etudiants($row['ID'],$row['Nom'],$row['Maths'],$row['Informatique']);
         }
     }
     closeConnection($conn);
@@ -41,9 +41,9 @@ function import_note(){
                             <td><?= htmlspecialchars($etudiants[$c]->nom) ?></td>
                             <td><?=$etudiants[$c]->calculemoyenne()?></td>
                             <td><?=$etudiants[$c]->remarque()?></td>
-                            <td class="buttoncell"><a href="modify.php?id=<?=$c?>"><button id="mod">Modifier</button></a></td>
-                            <td class="buttoncell"><a href="delete.php?id=<?=$c?>"><button id="del">Supprimer</button></a></td>
-                            <td class="buttoncell"><a href="print.php?id=<?=$c?>"><button id="prt">Imprimer</button></a></td>
+                            <td class="buttoncell"><a href="modify.php?id=<?=$etudiants[$c]->ID?>"><button id="mod">Modifier</button></a></td>
+                            <td class="buttoncell"><a href="delete.php?id=<?=$etudiants[$c]->ID?>"><button id="del">Supprimer</button></a></td>
+                            <td class="buttoncell"><a href="print.php?id=<?=$etudiants[$c]->ID?>"><button id="prt">Imprimer</button></a></td>
                         </tr>
                     <?php };?>
                 

@@ -12,7 +12,7 @@ function import_note(){
     $etudiants=[];
     if($result->rowCount()>0){
         while($row=$result->fetch()){
-            $etudiants[]=new Etudiants($row['Nom'],$row['Maths'],$row['Informatique']);
+            $etudiants[]=new Etudiants($row['ID'],$row['Nom'],$row['Maths'],$row['Informatique']);
         }
     }
     closeConnection($conn);
@@ -24,11 +24,11 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $nom=$_POST['nom'];
     $notM=$_POST['maths'];
     $notInfo=$_POST['info'];
-    $etudiants[]=new Etudiants($nom,$notM,$notInfo);
+    $etudiants[]=new Etudiants(count($etudiants)+1,$nom,$notM,$notInfo);
     $conn=getConnection();
     if($conn){
         $sql=$conn->prepare("INSERT INTO Notes VALUES(?,?,?,?)");
-        $sql->execute([count($etudiants),$nom,$notM,$notInfo]);
+        $sql->execute([$etudiants['ID'],$nom,$notM,$notInfo]);
         closeConnection($conn);
         setcookie('etudiants',serialize($etudiants),time()+86400,"/");
     } else {

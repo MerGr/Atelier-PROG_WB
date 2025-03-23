@@ -14,7 +14,7 @@ if(isset($_GET['id'])){
     if($conn){
         $sql="DELETE FROM Notes WHERE ID=?";
         $stmt=$conn->prepare($sql);
-        $stmt->execute([$index+1]);
+        $stmt->execute([$index]);
         closeConnection($conn);
     } else {
         echo "<h3 style='color: white; padding: 1em; background-color: red; margin-top: 2em; border-radius: 5px;'>Oops! Un erreur est survenue. Merci du ressayer plus tard</h3>";
