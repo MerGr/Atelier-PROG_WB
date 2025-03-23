@@ -50,7 +50,7 @@ if (isset($_POST['confirm_delete'])) {
                     <td class="buttoncell">
                         <form method="POST" class="buttoncell">
                             <input type="hidden" name="delete_id" value="<?= $etudiant->ID ?>">
-                            <button type="submit" name="delete" id="del">Supprimer</button>
+                            <button type="submit" name="delete" value="delete" id="del">Supprimer</button>
                         </form>
                     </td>
                     <td class="buttoncell"><a href="print.php?id=<?= $etudiant->ID ?>"><button id="prt">Imprimer</button></a></td>
