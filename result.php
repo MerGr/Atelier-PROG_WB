@@ -48,7 +48,7 @@ if (isset($_POST['confirm_delete'])) {
                     <td><?= $etudiant->remarque() ?></td>
                     <td class="buttoncell"><a href="modify.php?id=<?= $etudiant->ID ?>"><button id="mod">Modifier</button></a></td>
                     <td class="buttoncell">
-                        <form method="POST">
+                        <form method="POST" class="buttoncell">
                             <input type="hidden" name="delete_id" value="<?= $etudiant->ID ?>">
                             <button type="submit" name="delete" id="del">Supprimer</button>
                         </form>
