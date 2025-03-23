@@ -100,7 +100,7 @@ input[type="text"], input[type="password"], input[type="number"]{
     height: 100;
 }
 
-.button:hover, #mod:hover, #del:hover{
+.button:hover, #mod:hover, #del:hover, #prt:hover{
     background-color: #746f50f2;
 }
 

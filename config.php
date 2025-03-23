@@ -1,5 +1,5 @@
 <?php
-
+header("Cache-Control: max-age=300, must-revalidate");
 function getConnection() {
     $host='localhost';
     $dbname='GesNotes';
