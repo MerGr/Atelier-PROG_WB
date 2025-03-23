@@ -17,12 +17,12 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         $stmt=$conn->prepare($sql);
         $stmt->execute([$index]);
         closeConnection($conn);
+        header('location: result.php');
+        exit();
     } else {
         echo "<h3 style='color: white; padding: 1em; background-color: red; margin-top: 2em; border-radius: 5px;'>Oops! Un erreur est survenue. Merci du ressayer plus tard</h3>";
     }
 }
-
-header('location: result.php');
 ?>
 
 <html>
