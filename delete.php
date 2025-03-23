@@ -9,9 +9,13 @@ if (!isset($_SESSION['id'])) {
 if(isset($_GET['id'])){
     $index=$_GET['id'];
     $etudiants=isset($_COOKIE['etudiants'])?unserialize($_COOKIE['etudiants']):[];
-    if(isset($etudiants[$index])){
-        array_splice($etudiants,$index,1);
-        setcookie('etudiants',serialize($etudiants),time()+86400,'/');
+    $conn=getConnection();
+    if($conn){
+        $sql="DELETE FROM Notes WHERE ID=$index";
+        $conn->exec($sql);
+        closeConnection($conn);
+    } else {
+        echo "<h3 style='color: white; padding: 1em; background-color: red; margin-top: 2em; border-radius: 5px;'>Oops! Un erreur est survenue. Merci du ressayer plus tard</h3>";
     }
 }
 

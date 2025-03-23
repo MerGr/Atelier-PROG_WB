@@ -1,5 +1,6 @@
 <?php
 require_once('Classes.php');
+require_once('config.php');
 session_start();
 if(!isset($_SESSION['id'])){
     header("location:index.php");
@@ -8,21 +9,27 @@ if(!isset($_SESSION['id'])){
 function  nouvel($nom,$math,$info){
     return new Etudiants($nom,$math,$info);
 }
-$etudiants= isset($_COOKIE['etudiants']) ? unserialize($_COOKIE['etudiants']) : [];
 
 if($_SERVER['REQUEST_METHOD']=='POST'){
     $nom=$_POST['nom'];
     $notM=$_POST['maths'];
     $notInfo=$_POST['info'];
     $etudiants[]=nouvel($nom,$notM,$notInfo);
-    setcookie('etudiants',serialize($etudiants),time()+86400,"/");
+    $conn=getConnection();
+    if($conn){
+        $sql="INSERT INTO Notes VALUES('$nom',$notM,$notInfo)";
+        $conn->exec($sql);
+        closeConnection($conn);
+    } else {
+        echo "<h3 style='color: white; padding: 1em; background-color: red; margin-top: 2em; border-radius: 5px;'>Oops! Un erreur est survenue. Merci du ressayer plus tard</h3>";
+    }
     
 }
 
 ?>
 <html>
     <head>
-        <title>Atelier 0</title>
+        <title>Atelier</title>
         <meta charset="utf-8" lang="fr-FR">
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>

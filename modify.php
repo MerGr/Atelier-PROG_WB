@@ -1,5 +1,6 @@
 <?php
 require_once('Classes.php');
+require_once('config.php');
 session_start();
 if(!isset($_SESSION['id'])){
     header('Location:index.php');
@@ -10,9 +11,17 @@ $etudiants=isset($_COOKIE['etudiants'])?unserialize($_COOKIE['etudiants']):[];
 
 
 if($_SERVER['REQUEST_METHOD']=='POST'){
-    $etudiants[$index]->noteM=$_POST['maths'];
-    $etudiants[$index]->noteInfo=$_POST['info'];
-    setcookie('etudiants',serialize($etudiants),time()+86400,'/');
+    $conn=getConnection();
+    $sql="UPDATE Notes SET Maths=:maths, Informatique=:info WHERE ID=$index AND Nom=:nom";
+    if($conn){
+        $stmt=$conn->prepare($sql);
+        $stmt->bindParam(':maths',$_POST['maths']);
+        $stmt->bindParam(':info',$_POST['info']);
+        $stmt->execute();
+        closeConnection($conn);
+    } else {
+        echo "<h3 style='color: white; padding: 1em; background-color: red; margin-top: 2em; border-radius: 5px;'>Oops! Un erreur est survenue. Merci du ressayer plus tard</h3>";
+    }
     header('Location:result.php');
     exit();
 
