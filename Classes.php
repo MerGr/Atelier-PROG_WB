@@ -4,12 +4,14 @@ class Etudiants{
     public string $nom;
     private float $noteM;
     private float $noteInfo;
+    private string $photo;
 
-    public function __construct($ID,$nom,$noteM,$noteInfo){
+    public function __construct($ID,$nom,$noteM,$noteInfo,$photo){
         $this->ID=$ID;
         $this->nom=$nom;
         $this->noteM=$noteM;
         $this->noteInfo=$noteInfo;
+        $this->photo=$photo;
     }
 
     public function __get($name){
@@ -32,7 +34,8 @@ class Etudiants{
             "ID"=>$this->ID,
             "nom"=>$this->nom,
             "noteM"=>$this->noteM,
-            "noteInfo"=>$this->noteInfo
+            "noteInfo"=>$this->noteInfo,
+            "photo"=>$this->photo
         ];
     }
 
@@ -41,6 +44,7 @@ class Etudiants{
         $this->nom=$tab['nom'];
         $this->noteM=$tab['noteM'];
         $this->noteInfo=$tab['noteInfo'];
+        $this->photo=$tab['photo'];
     }
 
     public function toArray(){
@@ -48,7 +52,8 @@ class Etudiants{
             "ID"=>$this->ID,
             "nom"=>$this->nom,
             "noteM"=>$this->noteM,
-            "noteInfo"=>$this->noteInfo
+            "noteInfo"=>$this->noteInfo,
+            "photo"=>$this->photo
         ];
     }
 

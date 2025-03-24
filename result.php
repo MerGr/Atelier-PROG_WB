@@ -12,7 +12,7 @@ function import_note(){
     $etudiants=[];
     if($result->rowCount()>0){
         while($row=$result->fetch()){
-            $etudiants[]=new Etudiants($row['ID'],$row['Nom'],$row['Maths'],$row['Informatique']);
+            $etudiants[]=new Etudiants($row['ID'],$row['Nom'],$row['Maths'],$row['Informatique'], $row['Photo']);
         }
     }
     closeConnection($conn);

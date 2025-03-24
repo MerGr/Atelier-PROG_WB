@@ -10,7 +10,7 @@ class PDF extends FPDF {
     function LoadData($index){
         $conn=getConnection();
         if($conn){
-            $sql="SELECT Nom, Maths, Informatique FROM Notes WHERE ID=?";
+            $sql="SELECT Nom, Maths, Informatique, Photo FROM Notes WHERE ID=?";
             $result=$conn->prepare($sql);
             $result->execute([$index]);
             $data=$result->fetch();
@@ -22,14 +22,16 @@ class PDF extends FPDF {
     function Table($header, $data){
         $this->SetLineWidth(.3);
         $w = array(150,30);
-        
+        $photo=trim($data['Photo'], "'\"");
         // Nom
         $this->SetFillColor(220);
         $this->SetFont('','B', 12);
-        $this->Cell($w[0],12,$header[0],0,0,'L',1);
+        $this->Image($photo,150,45,40);
+        $this->Ln(8);
+        $this->Cell($w[0]-41,12,$header[0],0,0,'L',1);
         $this->SetFont('');
         $this->Cell($w[1],12,$data['Nom'],0,0,'R',1);
-        $this->Ln(30);
+        $this->Ln(40);
         // Maths
         $this->SetFont('','B');
         $this->Cell($w[0],12,$header[1],'TBL',0,'L');

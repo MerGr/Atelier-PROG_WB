@@ -5,12 +5,12 @@
 }
 @media screen and (min-width: 768px) {
     :root {
-        --max-width: 50em;
+        --max-width: fit-content;
     }
     
 }
 
-html * {
+html * , #file::file-selector-button{
     -webkit-transition:0.2s;
     -moz-transition:0.2s;
     -o-transition:0.2s;
@@ -20,11 +20,12 @@ html * {
 
 html, body, #parent-box, div, form, .buttons, .popup, .popup-content{
     display: flex;
-    align-content: center;
-    align-items: center;
     flex-wrap: nowrap;
     column-gap: 1em;
 
+}
+body, #parent-div{
+    align-items: center;
 }
 
 .popup{
@@ -50,10 +51,9 @@ html, body, #parent-box, div, form, .buttons, .popup, .popup-content{
 
 html, body, #parent-box, form{
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-around;
     text-align: center;
 }
-
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -127,7 +127,30 @@ input[type="text"], input[type="password"], input[type="number"]{
 }
 
 .buttons{
-    max-width: 70%;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+}
+
+#file{
+    padding: .2em;
+    background-color: #edf1ebfe;
+    color: black;
+    width: 12rem;
+    border-radius: 25px;
+}
+
+#file::file-selector-button{
+    padding: .2em;
+    border-radius: 25px;
+    border-style: none;
+    color:white;
+    background-color: #b0aa7af2;
+    width: fit-content;
+}
+
+#file::file-selector-button:hover{
+    background-color: #746f50f2;
 }
 
 footer{
