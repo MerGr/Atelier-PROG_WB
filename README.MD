@@ -1,6 +1,14 @@
 # Atelier PROGRAMMATION WEB
 Pour SMI-S6
 
+## Version hébergée
+
+https://atelierweb.mergrweb.me/
+
+Hébergée sur un VPS Oracle Cloud Standard.E2.1.Micro, avec un proxy NGINX et serveur MySQL sur Docker.
+
+//Peut être protégé par une portail Authelia.
+
 ## Installation
 
 ### 1. Clonez ou téléchargez le répositoire
