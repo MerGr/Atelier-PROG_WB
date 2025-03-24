@@ -23,3 +23,12 @@ Le fichier .env contient :
 ### 3. Importer la base de données à votre serveur MySQL
 
 La base de données est situé sur ```GesNotes.sql```
+
+## Utilisation
+
+Les identifiants par défaut sont :
+
+| Champ         | Valeur      |
+| ------------- |-------------|
+| Utilisateur   | ```admin``` |
+| Mot de passe  | ```123456```|
