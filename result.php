@@ -5,21 +5,9 @@ session_start();
 if(!isset($_SESSION['id'])){
     header("Location:index.php");
 }
-function import_note(){
-    $conn=getConnection();
-    $sql="SELECT * FROM Notes";
-    $result=$conn->query($sql);
-    $etudiants=[];
-    if($result->rowCount()>0){
-        while($row=$result->fetch()){
-            $etudiants[]=new Etudiants($row['ID'],$row['Nom'],$row['Maths'],$row['Informatique'], $row['Photo']);
-        }
-    }
-    closeConnection($conn);
-    return $etudiants;
-}
-    $etudiants=import_note();
-    setcookie('etudiants',serialize($etudiants),time()+86400,"/");
+
+$etudiants=import_note();
+setcookie('etudiants',serialize($etudiants),time()+86400,"/");
 
 ?>
 

@@ -5,6 +5,10 @@ require_once('config.php');
 require_once('fpdf.php');
 session_start();
 
+if(!isset($_SESSION['id']) || check_isDELETED($_GET['id'])){
+    header('Location:index.php');
+}
+
 $index=intval($_GET['id']);
 class PDF extends FPDF {
     function LoadData($index){

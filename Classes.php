@@ -5,6 +5,7 @@ class Etudiants{
     private float $noteM;
     private float $noteInfo;
     private string $photo;
+    
 
     public function __construct($ID,$nom,$noteM,$noteInfo,$photo){
         $this->ID=$ID;

@@ -2,7 +2,7 @@
 require_once('Classes.php');
 require_once('config.php');
 session_start();
-if(!isset($_SESSION['id'])){
+if(!isset($_SESSION['id']) || check_isDELETED($_GET['id'])){
     header('Location:index.php');
 }
 
@@ -49,8 +49,15 @@ if($_SERVER['REQUEST_METHOD']=='POST' && isset($_POST['modifier']) && $uploadOk)
     $info=$_POST['info'];
     $photo=$target_file;
     $conn=getConnection();
+    $check_existing_image="SELECT Photo FROM Notes WHERE ID=?";
     $sql="UPDATE Notes SET Maths=?, Informatique=?, Photo=? WHERE ID=?";
     if($conn){
+        $stmt=$conn->prepare($check_existing_image);
+        $stmt->execute([$id]);
+        $data=$stmt->fetch();
+        if(file_exists($data['Photo'])){
+            unlink($data['Photo']);
+        }
         $stmt=$conn->prepare($sql);
         $stmt->execute([$maths,$info,$photo,$id]);
         closeConnection($conn);

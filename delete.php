@@ -2,9 +2,8 @@
 require_once('config.php');
 session_start();
 
-if (!isset($_SESSION['id'])) {
-    header('location: index.php');
-    exit;
+if(!isset($_SESSION['id']) || check_isDELETED($_GET['id'])){
+    header('Location:index.php');
 }
 
 $index=$_GET['id'];
@@ -13,7 +12,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $etudiants=isset($_COOKIE['etudiants'])?unserialize($_COOKIE['etudiants']):[];
     $conn=getConnection();
     if($conn){
-        $sql="DELETE FROM Notes WHERE ID=?";
+        $sql="UPDATE Notes SET isDELETED=1 WHERE ID=?";
         $stmt=$conn->prepare($sql);
         $stmt->execute([$index]);
         closeConnection($conn);
