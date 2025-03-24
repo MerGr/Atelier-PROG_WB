@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 24, 2025 at 05:31 PM
+-- Generation Time: Mar 24, 2025 at 05:46 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -54,7 +54,7 @@ CREATE TABLE `Notes` (
   `Nom` tinytext NOT NULL,
   `Informatique` float NOT NULL,
   `Maths` float NOT NULL,
-  `Photo` text NOT NULL DEFAULT '\'./assets/blank-pfp.png\'',
+  `Photo` text NOT NULL,
   `isDELETED` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
