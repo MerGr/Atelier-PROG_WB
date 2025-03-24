@@ -1,9 +1,10 @@
-    <?php
+<?php
     require_once('Classes.php');
     require_once('config.php');
     session_start();
     $target_dir = "uploads/";
     $uploadOk = false;
+    $default_img="assets/blank-pfp.png";
 
     if(!isset($_SESSION['id'])){
         header("location:index.php");
@@ -11,28 +12,34 @@
 
     $etudiants=import_note();
 
-    if(isset($_POST['ajouter']) && isset($_FILES['img'])){
-        $target_file = $target_dir . basename($_FILES["img"]["name"]);
-        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-        $check = getimagesize($_FILES["img"]["tmp_name"]);
-        if($check !== false){
-            $uploadOk=true;
+    if(isset($_POST['ajouter'])){
+        if(isset($_FILES["img"]) && $_FILES["img"]["error"] === UPLOAD_ERR_OK && !empty($_FILES["img"]["tmp_name"])) {
+            $target_file = $target_dir . basename($_FILES["img"]["name"]);
+            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+            $check = getimagesize($_FILES["img"]["tmp_name"]);
+            if($check !== false){
+                $uploadOk=true;
+            } else {
+                $uploadOk=false;
+            }
         } else {
-            $uploadOk=false;
+            $target_file =$default_img;
+            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+            $uploadOk=true;
         }
         if($_FILES["img"]["size"] > 2000000){
             echo "<h3 style='color: white; padding: 1em; background-color: red; margin-top: 2em; border-radius: 5px;'>Désolé, l'image PNG doit être inférieure de 2 Mo.</h3>";
             $uploadOk=false;
         }
-
+    
         if($imageFileType != "png") {
             echo "<h3 style='color: white; padding: 1em; background-color: red; margin-top: 2em; border-radius: 5px;'>Seuls les images de type PNG seront acceptés.</h3>";
             $uploadOk=false;
         }
-
+    
         if(!$uploadOk){
             echo "<h3 style='color: white; padding: 1em; background-color: red; margin-top: 2em; border-radius: 5px;'>Désolé, votre fichier n'a pas été téléchargé.</h3>";
-        } else {
+        } else if($target_file!=$default_img){
             $newName=$target_dir . "img_" . time() . "_" . uniqid() . ".png";
             if(move_uploaded_file($_FILES["img"]["tmp_name"], $newName)){
                 $target_file=$newName;
@@ -47,14 +54,16 @@
         $nom=$_POST['nom'];
         $notM=$_POST['maths'];
         $notInfo=$_POST['info'];
-        $ID=count($etudiants)+1;
         $photo=$target_file;
-        $etudiants[]=new Etudiants($ID,$nom,$notM,$notInfo, $photo);
         $conn=getConnection();
         if($conn){
-            $sql=$conn->prepare("INSERT INTO Notes VALUES(?,?,?,?,?)");
+            $getID=$conn->prepare("SELECT COUNT(*) FROM Notes");
+            $getID->execute();
+            $ID=intval($getID->fetchColumn())+1;
+            $sql=$conn->prepare("INSERT INTO Notes (ID,Nom,Maths,Informatique,Photo) VALUES(?,?,?,?,?)");
             $sql->execute([$ID,$nom,$notM,$notInfo,$photo]);
             closeConnection($conn);
+            $etudiants[]=new Etudiants($ID,$nom,$notM,$notInfo, $photo);
             setcookie('etudiants',serialize($etudiants),time()+86400,"/");
         } else {
             echo "<h3 style='color: white; padding: 1em; background-color: red; margin-top: 2em; border-radius: 5px;'>Oops! Un erreur est survenue. Merci du ressayer plus tard</h3>";
@@ -85,7 +94,7 @@
                     </div>
                     <div>
                         <label for="img">Photo</label>
-                        <input type="file" name="img" id='file' accept="image/png" required>
+                        <input type="file" name="img" id='file' accept="image/png">
                     </div>
                     <div class="buttons">
                         <input type="submit" value="Ajouter" name="ajouter" class="button">

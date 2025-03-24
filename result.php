@@ -28,9 +28,9 @@ setcookie('etudiants',serialize($etudiants),time()+86400,"/");
                     <td><?= htmlspecialchars($etudiant->nom) ?></td>
                     <td><?= $etudiant->calculemoyenne() ?></td>
                     <td><?= $etudiant->remarque() ?></td>
-                    <td class="buttoncell"><a href="modify.php?id=<?= $etudiant->ID ?>"><button id="mod">Modifier</button></a></td>
-                    <td class="buttoncell"><a href="delete.php?id=<?= $etudiant->ID ?>"><button type="submit" name="delete" id="del">Supprimer</button></a></td>
-                    <td class="buttoncell"><a href="print.php?id=<?= $etudiant->ID ?>"><button id="prt">Imprimer</button></a></td>
+                    <td class="buttoncell"><a href="modify.php?id=<?=$etudiant->ID ?>"><button id="mod">Modifier</button></a></td>
+                    <td class="buttoncell"><a href="delete.php?id=<?=$etudiant->ID ?>"><button type="submit" name="delete" id="del">Supprimer</button></a></td>
+                    <td class="buttoncell"><a href="print.php?id=<?=$etudiant->ID ?>"><button id="prt">Imprimer</button></a></td>
                 </tr>
             <?php endforeach; ?>
                 

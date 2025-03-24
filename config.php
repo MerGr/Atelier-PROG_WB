@@ -28,8 +28,9 @@ function import_note(){
     $result=$conn->query($sql);
     $etudiants=[];
     if($result->rowCount()>0){
-        while(($row = $result->fetch()) !== false && $row['isDELETED'] == false){
-            $etudiants[]=new Etudiants($row['ID'],$row['Nom'],$row['Maths'],$row['Informatique'], $row['Photo']);
+        while(($row = $result->fetch()) !== false){
+            if($row['isDELETED'] == false)
+                $etudiants[]=new Etudiants($row['ID'],$row['Nom'],$row['Maths'],$row['Informatique'], $row['Photo']);
         }
     }
     closeConnection($conn);
@@ -44,5 +45,15 @@ function check_isDELETED($index){
     $data=$stmt->fetch();
     closeConnection($conn);
     return $data['isDELETED'];
+}
+
+function getName($index){
+    $conn=getConnection();
+    $sql="SELECT Nom FROM Notes WHERE ID=?";
+    $stmt=$conn->prepare($sql);
+    $stmt->execute([$index]);
+    $data=$stmt->fetch();
+    closeConnection($conn);
+    return $data['Nom'];
 }
 ?>

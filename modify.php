@@ -6,19 +6,26 @@ if(!isset($_SESSION['id']) || check_isDELETED($_GET['id'])){
     header('Location:index.php');
 }
 
+$default_img="assets/blank-pfp.png";
 $uploadOk=false;
 $target_dir = "uploads/";
 $index=$_GET['id'];
 $etudiants=isset($_COOKIE['etudiants'])?unserialize($_COOKIE['etudiants']):[];
 
-if(isset($_POST['modifier']) && isset($_FILES['img'])){
-    $target_file = $target_dir . basename($_FILES["img"]["name"]);
-    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-    $check = getimagesize($_FILES["img"]["tmp_name"]);
-    if($check !== false){
-        $uploadOk=true;
+if(isset($_POST['modifier'])){
+    if(isset($_FILES["img"]) && $_FILES["img"]["error"] === UPLOAD_ERR_OK && !empty($_FILES["img"]["tmp_name"])) {
+        $target_file = $target_dir . basename($_FILES["img"]["name"]);
+        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+        $check = getimagesize($_FILES["img"]["tmp_name"]);
+        if($check !== false){
+            $uploadOk=true;
+        } else {
+            $uploadOk=false;
+        }
     } else {
-        $uploadOk=false;
+        $target_file =$default_img;
+        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+        $uploadOk=true;
     }
     if($_FILES["img"]["size"] > 2000000){
         echo "<h3 style='color: white; padding: 1em; background-color: red; margin-top: 2em; border-radius: 5px;'>Désolé, l'image PNG doit être inférieure de 2 Mo.</h3>";
@@ -50,16 +57,23 @@ if($_SERVER['REQUEST_METHOD']=='POST' && isset($_POST['modifier']) && $uploadOk)
     $photo=$target_file;
     $conn=getConnection();
     $check_existing_image="SELECT Photo FROM Notes WHERE ID=?";
+    $sql_nophoto="UPDATE Notes SET Maths=?, Informatique=? WHERE ID=?";
     $sql="UPDATE Notes SET Maths=?, Informatique=?, Photo=? WHERE ID=?";
     if($conn){
         $stmt=$conn->prepare($check_existing_image);
         $stmt->execute([$id]);
         $data=$stmt->fetch();
-        if(file_exists($data['Photo'])){
-            unlink($data['Photo']);
+        if($photo !== $default_img) { 
+            $stmt=$conn->prepare($sql);
+            $stmt->execute([$maths,$info,$photo,$id]);
+        
+            if(file_exists($data['Photo']) && $data['Photo'] !== $default_img) {
+                unlink($data['Photo']);
+            }
+        } else {
+            $stmt=$conn->prepare($sql_nophoto);
+            $stmt->execute([$maths,$info,$id]);
         }
-        $stmt=$conn->prepare($sql);
-        $stmt->execute([$maths,$info,$photo,$id]);
         closeConnection($conn);
         header('Location:result.php');
         exit();
@@ -88,7 +102,7 @@ if($_SERVER['REQUEST_METHOD']=='POST' && isset($_POST['modifier']) && $uploadOk)
                 </div>
                 <div>
                     <label for="nom">Etudiant</label>
-                    <input type="text" name="nom" value="<?php echo $etudiants[$index-1]->nom?>" required disabled>
+                    <input type="text" name="nom" value="<?php echo getName($index)?>" required disabled>
                 </div><div>
                     <label for="maths">Maths</label>
                     <input type="number" step="0.01" min="0" max="20.00" name="maths" required>
