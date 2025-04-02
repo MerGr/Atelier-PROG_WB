@@ -8,6 +8,7 @@ https://atelierweb.mergrweb.me/
 Hébergée sur un VPS Oracle Cloud Standard.E2.1.Micro, avec un proxy NGINX et serveur MySQL sur Docker.
 
 //Peut être protégé par un portail Authelia.
+### ⚠️ *ACTUELLEMENT HORS-LIGNE, SVP PUBLIEZ UN PROBLEME (ISSUE) POUR QUE JE LE METTRE EN-LIGNE*
 
 ## Installation
 
